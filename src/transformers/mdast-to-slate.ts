@@ -189,7 +189,7 @@ function createCustomNode(rawData: any) {
   const [subtype, options='', props=''] = body.split('|');
   const parsedProps = parse(props);
   const subtypeLowercased = subtype.toLowerCase();
-  const payload:any = {
+  let payload:any = {
     type: 'custom',
     subtype: subtypeLowercased,
     ...parsedProps,
@@ -201,6 +201,12 @@ function createCustomNode(rawData: any) {
     const ids = parsedProps?.id?.split(',');
     payload.ids = ids?.length ? ids : [];
     payload.urls = [];
+  }
+  if ('newline' === subtypeLowercased) {
+    payload = createParagraph({
+      type: 'paragraph',
+      children: []
+    }, {})
   }
   return payload;
 }
