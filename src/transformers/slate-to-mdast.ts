@@ -164,6 +164,11 @@ function convertNodes(nodes: slate.Node[]): unistLib.Node[] {
       if (!n) continue;
       const node = createMdastNode(n);
       if (node) {
+        if (!node.children.length) {
+          node.children.push({
+            type: 'text', value: "{{NewLine}}"
+          })
+        }
         mdastNodes.push(node as unistLib.Node);
       }
     }
